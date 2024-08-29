@@ -5,6 +5,7 @@ import { Player, PlayerData } from "../models/player";
 import { ScoreSheet } from "./ScoreSheet";
 import { GameMenu } from "./GameMenu";
 import { Button } from "./Button";
+import { GameOverMenu } from "./GameOverMenu";
 
 const storageKey = "yahtzeegame";
 
@@ -28,7 +29,7 @@ interface IGameContext {
 
 export const GameContext = React.createContext<IGameContext>({
   game: loadGame(),
-  updateGame: (game?: Game) => {
+  updateGame: () => {
     return;
   },
 });
@@ -36,6 +37,7 @@ export const GameContext = React.createContext<IGameContext>({
 export const App: React.FC = () => {
   const [game, setGame] = useState<Game | undefined>(loadGame());
   const [menuVisible, setMenuVisible] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
 
   const updateGame = (game: Game) => {
     saveGame(game);
@@ -45,10 +47,22 @@ export const App: React.FC = () => {
   const showMenu = () => setMenuVisible(true);
   const hideMenu = () => setMenuVisible(false);
 
-  const startNewGame = () => {
-    updateGame(new Game());
+  const startNewGame = (shouldCreateGame: boolean) => {
+    if (shouldCreateGame) {
+      updateGame(new Game());
+    }
     showMenu();
+    setGameOver(false);
   };
+
+  const canEndGame =
+    !gameOver &&
+    game &&
+    game?.players &&
+    game?.players.length > 0 &&
+    game.players.every((p) => p.round >= 12);
+
+  const endGame = () => setGameOver(true);
 
   return (
     <React.StrictMode>
@@ -56,14 +70,24 @@ export const App: React.FC = () => {
         <main className="app">
           <header className="header">
             <h1>Yahtzee</h1>
+            {canEndGame && <Button onClick={endGame}>End Game</Button>}
             <Button onClick={showMenu}>Players</Button>
           </header>
           <div className="body">
             {game ? (
-              <ScoreSheet />
+              <div className="content">
+                {!gameOver ? (
+                  <ScoreSheet />
+                ) : (
+                  <GameOverMenu
+                    players={game?.players}
+                    onStartNewGame={() => startNewGame(false)}
+                  />
+                )}
+              </div>
             ) : (
               <div className="no-content">
-                <Button onClick={startNewGame}>New Game</Button>
+                <Button onClick={() => startNewGame(true)}>New Game</Button>
               </div>
             )}
           </div>

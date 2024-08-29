@@ -1,0 +1,67 @@
+.game-over-menu {
+  position: fixed;
+  top: 40px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+}
+
+.game-over-menu__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-over-menu h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 1.8em;
+  font-family: "Lobster", serif;
+  font-weight: bold;
+  color: red;
+}
+
+.game-over-menu__player-list {
+  padding: 0;
+  margin-top: 0;
+  list-style-type: none;
+}
+
+.game-over-menu__player-list li {
+  display: grid;
+  grid-template-columns: 220px 80px 50px;
+  margin-bottom: 8px;
+}
+
+.game-over-menu__player-name {
+  grid-column: 1/2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-over-menu__player-name-value {
+  grid-column: 1/1;
+  font-family: var(--scribble-font-family);
+  font-size: var(--scribble-font-size);
+  border: 1px dotted transparent;
+  padding: 4px;
+  width: 200px;
+}
+
+.game-over-menu__player-score {
+  grid-column: 2/2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-over-menu__player-score-value {
+  font-family: var(--scribble-font-family);
+  font-size: var(--scribble-font-size);
+}
