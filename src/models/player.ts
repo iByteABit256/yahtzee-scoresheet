@@ -31,20 +31,17 @@ export interface PlayerData {
   id: string;
   name: string;
   scores: PlayerScores;
-  round: number;
 }
 
 export class Player {
   id: string;
   name: string;
   scores: PlayerScores;
-  round: number;
 
   constructor(name: string) {
     this.id = uuid();
     this.name = name;
     this.scores = new PlayerScores();
-    this.round = 0;
   }
 
   updateScore(fieldName: string, value?: number) {
@@ -62,19 +59,34 @@ export class Player {
       return;
     scores[fieldName] = value;
     this.scores = calculateScores(scores);
-    this.round++;
   }
 
   reset() {
     this.scores = new PlayerScores();
-    this.round = 0;
+  }
+
+  canEndGame() {
+    const scores = { ...this.scores };
+
+    let requiredValues = [
+      scores.ones,
+      scores.twos,
+      scores.threes,
+      scores.fours,
+      scores.fives,
+      scores.sixes,
+      scores.threeOfAKind,
+      scores.fourOfAKind,
+      scores.chance,
+    ];
+
+    return requiredValues.every((v) => v !== undefined && v !== null);
   }
 
   static fromData(p: PlayerData) {
     const newPlayer = new this(p.name);
     newPlayer.id = p.id;
     newPlayer.scores = p.scores;
-    newPlayer.round = p.round;
     return newPlayer;
   }
 }

@@ -60,7 +60,7 @@ export const App: React.FC = () => {
     game &&
     game?.players &&
     game?.players.length > 0 &&
-    game.players.every((p) => p.round >= 12);
+    game.players.every((p) => p.canEndGame());
 
   const endGame = () => setGameOver(true);
 
