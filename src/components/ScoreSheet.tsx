@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 import {
   GiInvertedDice1,
   GiInvertedDice2,
@@ -6,13 +6,13 @@ import {
   GiInvertedDice4,
   GiInvertedDice5,
   GiInvertedDice6,
-} from 'react-icons/gi';
-import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
-import { PlayerColumn } from './PlayerColumn';
-import { GameContext } from './App';
-import { Player } from '../models/player';
-import { Game } from '../models/game';
-import { Mobile, Default } from './Responsive';
+} from "react-icons/gi";
+import { MdChevronLeft, MdChevronRight } from "react-icons/md";
+import { PlayerColumn } from "./PlayerColumn";
+import { GameContext } from "./App";
+import { Player } from "../models/player";
+import { Game } from "../models/game";
+import { Mobile, Default } from "./Responsive";
 
 export const ScoreSheet: React.FC = () => {
   const { game, updateGame } = useContext(GameContext);
@@ -47,30 +47,30 @@ export const ScoreSheet: React.FC = () => {
   return (
     <div className="scoresheet">
       <div>
-        <div className="cell">Upper Section</div>
+        <div className="section-divider">Upper Section</div>
         <div className="cell">
           <span className="die-label">Aces</span>
-          <GiInvertedDice1 />= 1
+          <GiInvertedDice1 />
         </div>
         <div className="cell">
           <span className="die-label">Twos</span>
-          <GiInvertedDice2 />= 2
+          <GiInvertedDice2 />
         </div>
         <div className="cell">
           <span className="die-label">Threes</span>
-          <GiInvertedDice3 />= 3
+          <GiInvertedDice3 />
         </div>
         <div className="cell">
           <span className="die-label">Fours</span>
-          <GiInvertedDice4 />= 4
+          <GiInvertedDice4 />
         </div>
         <div className="cell">
           <span className="die-label">Fives</span>
-          <GiInvertedDice5 />= 5
+          <GiInvertedDice5 />
         </div>
         <div className="cell">
           <span className="die-label">Sixes</span>
-          <GiInvertedDice6 />= 6
+          <GiInvertedDice6 />
         </div>
         <div className="cell">Total Score</div>
         <div className="cell">Bonus (63+)</div>
@@ -89,7 +89,7 @@ export const ScoreSheet: React.FC = () => {
         <div className="cell">Grand Total</div>
       </div>
       <div>
-        <div className="cell instructions">How to score</div>
+        <div className="section-divider">How to score</div>
         <div className="cell instructions">Count and add only Aces</div>
         <div className="cell instructions">Count and add only Twos</div>
         <div className="cell instructions">Count and add only Threes</div>
@@ -125,7 +125,7 @@ export const ScoreSheet: React.FC = () => {
       <Mobile>
         {currentPlayer ? (
           <div>
-            <div className="cell player-name">
+            <div className="section-divider player-name">
               {multiplePlayers && <MdChevronLeft onClick={prevPlayer} />}
               {currentPlayer.name}
               {multiplePlayers && <MdChevronRight onClick={nextPlayer} />}
@@ -142,10 +142,10 @@ export const ScoreSheet: React.FC = () => {
       </Mobile>
       <Default>
         {game?.players && game?.players.length > 0 ? (
-          game?.players.map(p => {
+          game?.players.map((p) => {
             return (
               <div key={p.id}>
-                <div className="cell player-name">{p.name}</div>
+                <div className="section-divider player-name">{p.name}</div>
                 <PlayerColumn player={p} updatePlayer={updatePlayer} />
               </div>
             );
